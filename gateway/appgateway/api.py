@@ -20,3 +20,11 @@ def get_sub(request, a: int, b: int):
     
     # Retorna a resposta da API "appendpoint"
     return response.json()
+
+@api.get("/cep/")
+def get_cep(request, cep:int):
+    api_url = f"https://viacep.com.br/ws/{cep}/json/"
+    response = requests.get(api_url)
+    
+    # Retorna a resposta da API "appendpoint"
+    return response.json()
