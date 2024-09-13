@@ -1,15 +1,22 @@
+# appwebsocket/consumers.py
 import json
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 
-class ChatConsumer(WebsocketConsumer):
-    def connect(self):
-        self.accept()
+class ChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        # Aceitar a conexão do WebSocket
+        await self.accept()
 
-    def disconnect(self, close_code):
+    async def disconnect(self, close_code):
+        # Limpar a conexão, se necessário
         pass
 
-    def receive(self, text_data):
-        message = json.loads(text_data)['message']
-        self.send(text_data=json.dumps({
+    async def receive(self, text_data):
+        # Receber dados do WebSocket
+        data = json.loads(text_data)
+        message = data.get('message', '')
+
+        # Enviar a mensagem de volta pelo WebSocket
+        await self.send(text_data=json.dumps({
             'message': message
         }))
