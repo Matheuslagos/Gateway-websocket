@@ -2,3 +2,4 @@ django
 django-ninja
 channels
 requests
+uvicorn
